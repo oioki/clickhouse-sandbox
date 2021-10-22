@@ -44,10 +44,35 @@
   <timezone>Universal</timezone>
   <zookeeper>
     <node index="0">
-      <host>zookeeper-old</host>
+      <host>zookeeper_zoo1_1</host>
+      <port>2181</port>
+    </node>
+    <node index="1">
+      <host>zookeeper_zoo2_1</host>
+      <port>2181</port>
+    </node>
+    <node index="2">
+      <host>zookeeper_zoo3_1</host>
       <port>2181</port>
     </node>
   </zookeeper>
+
+    <remote_servers>
+        <access_log>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>clickhouse-1</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>clickhouse-2</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </access_log>
+    </remote_servers>
+
 
   <user_files_path>/var/lib/clickhouse/user_files</user_files_path>
   <format_schema_path>/var/lib/clickhouse/format_schema</format_schema_path>
