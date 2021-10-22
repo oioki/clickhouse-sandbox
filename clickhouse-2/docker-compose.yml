@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    clickhouse-2:
+        image: yandex/clickhouse-server:21.8.8
+        hostname: clickhouse-2
+        container_name: clickhouse-2
+        ports:
+            - 9002:9000
+        volumes:
+            - ./config:/etc/clickhouse-server
+            - ./data:/var/lib/clickhouse
+        ulimits:
+            nofile:
+                soft: 262144
+                hard: 262144
+
+networks:
+    default:
+        external:
+            name: clickhouse-net

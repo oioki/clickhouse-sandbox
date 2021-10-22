@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+    zookeeper-old:
+        image: zookeeper:3.4.11
+        ports:
+            - "1181:2181"
+            - "1182:2182"
+        container_name: zookeeper-old
+        hostname: zookeeper-old
+
+    clickhouse-1:
+        image: yandex/clickhouse-server:20.7.2
+        hostname: clickhouse-1
+        container_name: clickhouse-1
+        ports:
+            - 9001:9000
+        volumes:
+                - ./config:/etc/clickhouse-server
+                - ./data:/var/lib/clickhouse
+        ulimits:
+            nofile:
+                soft: 262144
+                hard: 262144
+        depends_on:
+            - "zookeeper-old"
+
+networks:
+    default:
+        external:
+            name: clickhouse-net
